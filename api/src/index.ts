@@ -1,6 +1,7 @@
 import './pre-start'; // Must be the first import
 import Config from "./config/environment";
 import { createServer } from './server';
+import { dbConnect } from '@config/mongodb';
 
 
 const startServer = (PORT: number): void => {
@@ -11,6 +12,13 @@ const startServer = (PORT: number): void => {
     //Server
     const app = createServer();
     app.listen(Config.port, () => {
+        dbConnect()
+        .then(() => {
+          console.log("db is connected");
+        })
+        .catch((err) => {
+          console.log(err);
+        });
         console.log(serverStartMsg, serverUrl);
     });
 };

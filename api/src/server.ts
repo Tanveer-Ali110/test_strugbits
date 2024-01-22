@@ -1,13 +1,17 @@
-import express, { Application, Request, RequestHandler, Response } from "express";
-import 'express-async-errors';
+import express, {
+  Application,
+  Request,
+  RequestHandler,
+  Response,
+} from "express";
+import "express-async-errors";
 import cookieParser from "cookie-parser";
-import morgan from 'morgan';
-import helmet from 'helmet';
+import morgan from "morgan";
+import helmet from "helmet";
 
-// import BaseRouter from "./routes";
+import BaseRouter from "./routes";
 import Config from "./config/environment";
-// import { errorHandler } from "@utils/errorHandler";
-
+import { errorHandler } from "@utils/errorHandler";
 
 export const createServer = (): Application => {
   const app: Application = express();
@@ -15,22 +19,26 @@ export const createServer = (): Application => {
   app.use(express.json());
   app.use(express.urlencoded({ extended: true }));
   app.use(cookieParser());
-  if (Config.nodeEnv === 'development') {
-    app.use(morgan('dev'));
+
+  app.use(express.static(__dirname + "/public"));
+  app.use("/uploads", express.static("uploads"));
+
+  if (Config.nodeEnv === "development") {
+    app.use(morgan("dev"));
   }
-  if (Config.nodeEnv === 'production') {
+  if (Config.nodeEnv === "production") {
     app.use(helmet());
   }
 
   // Add APIs
-//   app.use("/api", BaseRouter);
+  app.use("/api", BaseRouter);
 
   // Setup error handler
-//   app.use(errorHandler as unknown as RequestHandler);
+  app.use(errorHandler as unknown as RequestHandler);
 
   app.get("/", (_: Request, res: Response) => {
     res.send("Express server with TypeScript");
   });
 
   return app;
-}
+};

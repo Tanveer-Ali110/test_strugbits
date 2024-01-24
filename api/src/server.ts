@@ -20,8 +20,8 @@ export const createServer = (): Application => {
   app.use(express.urlencoded({ extended: true }));
   app.use(cookieParser());
 
-  app.use(express.static(__dirname + "/public"));
-  app.use("/uploads", express.static("uploads"));
+  app.use(express.static(__dirname + '/public'));
+  app.use('/uploads', express.static('uploads'));
 
   if (Config.nodeEnv === "development") {
     app.use(morgan("dev"));

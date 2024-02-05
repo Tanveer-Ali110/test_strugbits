@@ -1,0 +1,44 @@
+.Side-bar {
+  width: 400px;
+  height: 1080px;
+  background: #015249 0% 0% no-repeat padding-box;
+  border-radius: 0px 20px 20px 0px;
+  opacity: 1;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  left: 0;
+}
+.content {
+  width: 100%;
+  height: 400px;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  flex-direction: column;
+}
+
+.Logo {
+  width: 244px;
+  height: 58px;
+}
+
+.Side_button {
+  border: none;
+  display: flex;
+  align-items: center;
+  width: 296px;
+  height: 69px;
+  background: #043933 0% 0% no-repeat padding-box;
+  box-shadow: 0px 5px 25px #00000040;
+  border-radius: 10px;
+  opacity: 1;
+  justify-content: space-around;
+}
+
+.Button_icon {
+  top: 248px;
+  left: 63px;
+  width: 31px;
+  height: 31px;
+}

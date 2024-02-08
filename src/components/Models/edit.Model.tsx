@@ -1,10 +1,16 @@
+import { useEditCustomer } from "formiks";
+import { useRef } from "react";
 import { Button, Form, InputGroup, Modal } from "react-bootstrap";
 
 interface Iprops {
+  customer: any;
   show: boolean;
   toggleModel: () => void;
 }
-export const EditModel = ({ show, toggleModel }: Iprops) => {
+export const EditModel = ({ customer, show, toggleModel }: Iprops) => {
+  const { values, setFieldValue, handleSubmit, handleChange, errors, touched } =
+    useEditCustomer(toggleModel, customer);
+  const fileInputRef = useRef<HTMLInputElement>(null);
   return (
     <Modal show={show} onHide={toggleModel} className="create_model">
       <Modal.Header className="create_header">
@@ -26,6 +32,7 @@ export const EditModel = ({ show, toggleModel }: Iprops) => {
               right: "33px",
               cursor: "pointer",
             }}
+            onClick={toggleModel}
           >
             x
           </Modal.Title>
@@ -40,13 +47,15 @@ export const EditModel = ({ show, toggleModel }: Iprops) => {
           </Modal.Title>
         </div>
       </Modal.Header>
-      <Form>
+      <Form onSubmit={handleSubmit}>
         <Modal.Body className="create_main">
           <InputGroup className="mb-3">
             <Form.Control
               placeholder="Username"
+              value={values.username || ""}
               name="username"
               aria-describedby="basic-addon1"
+              onChange={handleChange}
             />
           </InputGroup>
           {/* {touched.username && errors.username && <div>{errors.username}</div>} */}
@@ -54,7 +63,9 @@ export const EditModel = ({ show, toggleModel }: Iprops) => {
             <Form.Control
               placeholder="Customer Name"
               name="name"
+              value={values.name || ""}
               aria-describedby="basic-addon1"
+              onChange={handleChange}
             />
           </InputGroup>
           {/* {touched.name && errors.name && <div>{errors.name}</div>} */}
@@ -62,8 +73,9 @@ export const EditModel = ({ show, toggleModel }: Iprops) => {
             <Form.Control
               placeholder="Email"
               name="email"
+              value={values.email}
               aria-describedby="basic-addon1"
-              // onChange={handleChange}
+              onChange={handleChange}
             />
           </InputGroup>
           {/* {touched.email && errors.email && <div>{errors.email}</div>} */}
@@ -74,26 +86,25 @@ export const EditModel = ({ show, toggleModel }: Iprops) => {
                 textDecoration: "underline",
                 color: "#57BC90",
               }}
-              // onClick={() => fileInputRef.current?.click()}
+              onClick={() => fileInputRef.current?.click()}
             >
               Upload File
             </span>
             <Form.Control
               type="file"
               name="profilePhoto"
-              // ref={fileInputRef}
+              ref={fileInputRef}
               aria-describedby="basic-addon1"
               style={{ display: "none" }}
               onChange={(event: any) => {
-                // setFieldValue("profilePhoto", event.currentTarget.files[0]);
-                // setFileName(event.currentTarget.files[0]?.name);
-                console.log(
-                  "Selected File Name:",
-                  event.currentTarget.files[0]?.name
-                );
+                setFieldValue("profilePhoto", event.currentTarget.files[0]);
               }}
             />
-            {/* <p className="mx-3">{fileName}</p> */}
+            <p className="mx-3">
+              {values.profilePhoto instanceof File
+                ? values.profilePhoto.name
+                : values.profilePhoto.split("-")[1]}
+            </p>
           </InputGroup>
           {/* {touched.profilePhoto && errors.profilePhoto && (
             <div>{errors.profilePhoto}</div> */}

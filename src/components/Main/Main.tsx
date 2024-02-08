@@ -2,14 +2,15 @@ import { useState } from "react";
 import "./Main.css";
 import Sign_in from "../../images/Sign In/Sign In.png";
 import { CreateModel } from "../Models/create.Model";
-import { EditModel } from "../Models/edit.Model";
-import { DeleteModel } from "../Models/delete.Model";
 import { CustomerCard } from "../cards/customer.card";
-// import Pic from "../../images/hispanic-young-entrepreneur-his-office-desk-working-making-packages-with-fashion-clothes-ship-their-customers (1)/hispanic-young-entrepreneur-his-office-desk-working-making-packages-with-fashion-clothes-ship-their-customers (1).png";
+import { useCustomer } from "state/hooks";
+import { Customer } from "state/types";
 
 const Main = () => {
   const [showCreate, setShowCreate] = useState(false);
   const toggleCreateModel = () => setShowCreate(!showCreate);
+
+  const {customers, isLoading } =useCustomer()
 
   return (
     <div className="Main">
@@ -32,8 +33,8 @@ const Main = () => {
             </div>
           </div>
         </div>
-        {[1, 2, 3, 4, 5].map(() => {
-          return <CustomerCard />;
+        {customers && customers.map((customer:Customer ,key:number) => {
+          return <CustomerCard customer={customer} key={key}/>;
         })}
         <CreateModel show={showCreate} toggleModel={toggleCreateModel} />
       </div>

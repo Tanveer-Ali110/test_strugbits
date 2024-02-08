@@ -5,12 +5,10 @@ import Main from "./components/Main/Main";
 
 function App() {
   return (
-    <>
       <div className="app_container">
         <SideBar />
         <Main />
       </div>
-    </>
   );
 }
 

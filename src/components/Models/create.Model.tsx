@@ -1,16 +1,15 @@
 import { useRef, useState } from "react";
 import { Button, Form, InputGroup, Modal } from "react-bootstrap";
-import { useCreateCustomer } from "../../formik";
+import { useCreateCustomer } from "formiks";
 
 interface Iprops {
   show: boolean;
   toggleModel: () => void;
 }
 export const CreateModel = ({ show, toggleModel }: Iprops) => {
-  const [fileName, setFileName] = useState("");
 
-  const { setFieldValue, handleSubmit, handleChange, errors, touched } =
-    useCreateCustomer();
+  const { values, setFieldValue, handleSubmit, handleChange, errors, touched } =
+    useCreateCustomer(toggleModel);
 
   const fileInputRef = useRef<HTMLInputElement>(null);
 
@@ -35,6 +34,7 @@ export const CreateModel = ({ show, toggleModel }: Iprops) => {
               right: "33px",
               cursor: "pointer",
             }}
+            onClick={toggleModel}
           >
             x
           </Modal.Title>
@@ -97,14 +97,11 @@ export const CreateModel = ({ show, toggleModel }: Iprops) => {
               style={{ display: "none" }}
               onChange={(event: any) => {
                 setFieldValue("profilePhoto", event.currentTarget.files[0]);
-                setFileName(event.currentTarget.files[0]?.name);
-                console.log(
-                  "Selected File Name:",
-                  event.currentTarget.files[0]?.name
-                );
               }}
             />
-            <p className="mx-3">{fileName}</p>
+            {values.profilePhoto && (
+              <p className="mx-3">{(values.profilePhoto as any).name}</p>
+            )}
           </InputGroup>
           {touched.profilePhoto && errors.profilePhoto && (
             <div>{errors.profilePhoto}</div>

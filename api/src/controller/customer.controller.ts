@@ -7,14 +7,15 @@ export const create = async (
   next: NextFunction
 ) => {
   try {
-    const file = req.file
+    const file = req.file;
     const { name, user_name, email } = req.body;
     const data = {
       name,
       user_name,
       email,
-      profile_picture:req.file.filename 
+      profile_picture: file ? req.file.filename : null,
     };
+    console.log('data',data)
     const response = await Customer.create(data);
     res.status(200).send(response);
   } catch (error) {
@@ -37,14 +38,14 @@ export const getAll = async (
 export const edit = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const id = req.params.id;
-    const file = req.file
+    const file = req.file;
     const { name, user_name, email } = req.body;
     let data = {
       name,
       user_name,
       email,
-    } as Record<string,string>;
-    if(file) data = {...data, profile_picture:req.file.filename }
+    } as Record<string, string>;
+    if (file) data = { ...data, profile_picture: req.file.filename };
     const response = await Customer.findByIdAndUpdate(id, data, { new: true });
     res.status(200).send(response);
   } catch (error) {

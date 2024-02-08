@@ -8,10 +8,11 @@ import "express-async-errors";
 import cookieParser from "cookie-parser";
 import morgan from "morgan";
 import helmet from "helmet";
+import cors from "cors";
 
 import BaseRouter from "./routes";
 import Config from "./config/environment";
-import { errorHandler } from "@utils/errorHandler";
+import { errorHandler } from "@middleware/errorHandler";
 
 export const createServer = (): Application => {
   const app: Application = express();
@@ -25,6 +26,7 @@ export const createServer = (): Application => {
 
   if (Config.nodeEnv === "development") {
     app.use(morgan("dev"));
+    app.use(cors());
   }
   if (Config.nodeEnv === "production") {
     app.use(helmet());

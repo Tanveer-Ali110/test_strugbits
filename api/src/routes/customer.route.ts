@@ -1,8 +1,7 @@
 import { Router } from "express";
 import multer from "multer";
 import { create, edit, remove, getAll } from "@controller/customer.controller";
-import { validateBody, validateParams } from "@middleware/vaidation.middleware";
-import { createCustomerSchema } from "@utils/validator";
+import {  validateParams } from "@middleware/vaidation.middleware";
 
 const customer = Router();
 

@@ -1,24 +1,32 @@
 import { useState } from "react";
 import { DeleteModel } from "../Models/delete.Model";
 import { EditModel } from "../Models/edit.Model";
-import Pic from "../../images/customers icon/customers icon.png"
+import { Customer } from "state/types";
+import { IMAGE_URL } from "config/environments";
 
-export const CustomerCard = () => {
-
+interface Iprops {
+  customer: Customer;
+}
+export const CustomerCard: React.FC<Iprops> = ({ customer }) => {
   const [showEdit, setShowEdit] = useState(false);
   const toggleEditModel = () => setShowEdit(!showEdit);
 
   const [showDelete, setShowDelete] = useState(false);
   const toggleDeleteModel = () => setShowDelete(!showDelete);
-
   return (
     <div className="line_container">
       <div className="line_content">
-        <div className="image"><img src={Pic} alt="" /></div>
+        <div className="image">
+          <img
+            src={`${IMAGE_URL}${customer.profile_picture}`}
+            alt="profile_picture"
+            width="30px"
+          />
+        </div>
         <div className="lineCenter_Content">
-          <div className="usename">jordan142</div>
-          <div className="Custome_Name">Jordan Joseph</div>
-          <div className="Email">randomemail@gmail.com</div>
+          <div className="usename">{customer.user_name}</div>
+          <div className="Custome_Name">{customer.name}</div>
+          <div className="Email">{customer.email}</div>
         </div>
         <div className="line_button">
           <button className="edit_button button" onClick={toggleEditModel}>
@@ -29,8 +37,8 @@ export const CustomerCard = () => {
           </button>
         </div>
       </div>
-      <EditModel show={showEdit} toggleModel={toggleEditModel} />
-      <DeleteModel show={showDelete} toggleModel={toggleDeleteModel} />
+      <EditModel customer={customer} show={showEdit} toggleModel={toggleEditModel} />
+      <DeleteModel customer={customer} show={showDelete} toggleModel={toggleDeleteModel} />
     </div>
   );
 };

@@ -15,7 +15,6 @@ export const create = async (
       email,
       profile_picture: file ? req.file.filename : null,
     };
-    console.log('data',data)
     const response = await Customer.create(data);
     res.status(200).send(response);
   } catch (error) {
@@ -24,7 +23,7 @@ export const create = async (
 };
 
 export const getAll = async (
-  req: Request,
+  _: Request,
   res: Response,
   next: NextFunction
 ) => {

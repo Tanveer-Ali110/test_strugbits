@@ -1,3 +1,4 @@
+import { ValidationException } from "@utils/exceptions";
 import { NextFunction, Request, Response } from "express";
 import { Types } from "mongoose";
 import { ZodSchema } from "zod";
@@ -25,7 +26,7 @@ export const validateParams = async (
   try {
     const id = req.params.id;
     if (!Types.ObjectId.isValid(id)) {
-      return res.status(400).json({ isError: true, error: "Invalid ObjectId" });
+      throw new ValidationException('Invalid ObjectId')
     }
     next();
   } catch (error) {

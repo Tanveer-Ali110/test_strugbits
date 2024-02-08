@@ -4,6 +4,7 @@ import { validationSchema } from "./schema";
 import { createAndUpdateCustomer } from "../utils/apiHelpers";
 import { useAppDispatch } from "state/hooks";
 import { addCustomer, editCustomer } from "state/customer";
+import { Customer } from "state/types";
 
 export const useCreateCustomer = (closeModel: () => void) => {
   const dispatch = useAppDispatch();
@@ -30,7 +31,7 @@ export const useCreateCustomer = (closeModel: () => void) => {
   return { values, setFieldValue, handleSubmit, handleChange, errors, touched };
 };
 
-export const useEditCustomer = (closeModel: () => void, customer: any) => {
+export const useEditCustomer = (closeModel: () => void, customer: Customer) => {
   const dispatch = useAppDispatch();
   const { values, setFieldValue, handleSubmit, handleChange, errors, touched } =
     useFormik({

@@ -58,7 +58,9 @@ export const EditModel = ({ customer, show, toggleModel }: Iprops) => {
               onChange={handleChange}
             />
           </InputGroup>
-          {/* {touched.username && errors.username && <div>{errors.username}</div>} */}
+          {touched.username && errors.username && (
+            <div className="text-danger">{errors.username}</div>
+          )}
           <InputGroup className="mb-3">
             <Form.Control
               placeholder="Customer Name"
@@ -68,7 +70,9 @@ export const EditModel = ({ customer, show, toggleModel }: Iprops) => {
               onChange={handleChange}
             />
           </InputGroup>
-          {/* {touched.name && errors.name && <div>{errors.name}</div>} */}
+          {touched.name && errors.name && (
+            <div className="text-danger">{errors.name}</div>
+          )}
           <InputGroup className="mb-3">
             <Form.Control
               placeholder="Email"
@@ -78,7 +82,9 @@ export const EditModel = ({ customer, show, toggleModel }: Iprops) => {
               onChange={handleChange}
             />
           </InputGroup>
-          {/* {touched.email && errors.email && <div>{errors.email}</div>} */}
+          {touched.email && errors.email && (
+            <div className="text-danger">{errors.email}</div>
+          )}
           <InputGroup className="mb-3 d-flex flex-direction-row">
             <span
               style={{
@@ -101,14 +107,14 @@ export const EditModel = ({ customer, show, toggleModel }: Iprops) => {
               }}
             />
             <p className="mx-3">
-              {values.profilePhoto instanceof File
-                ? values.profilePhoto.name
-                : values.profilePhoto.split("-")[1]}
+              {typeof values.profilePhoto === "string"
+                ? values.profilePhoto.split("-")[1]
+                : (values.profilePhoto as any).name}
             </p>
           </InputGroup>
-          {/* {touched.profilePhoto && errors.profilePhoto && (
-            <div>{errors.profilePhoto}</div> */}
-          {/* )} */}
+          {touched.profilePhoto && errors.profilePhoto && (
+            <div className="text-danger">{errors.profilePhoto}</div>
+          )}
           <Button type="submit" className="create_button">
             EDIT CUSTOMER
           </Button>
